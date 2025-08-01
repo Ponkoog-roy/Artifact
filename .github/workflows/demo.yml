@@ -25,9 +25,22 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: webartifacts files
+          path: |
+            dist/*
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
         run: echo "Deploying..."
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: webartifacts files
+          path: ./artifacts
+      - name: outpur content
+        run: ls
